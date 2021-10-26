@@ -55,23 +55,19 @@ export default function ShowNPC() {
     const [npcList, setNPCList] = useState([])
 
     React.useEffect(() => {
-      const getList = () => {
-        axios.post(`http://localhost:5000/npclist/`, filter).then((allNPC) => {
-            setNPCList(allNPC.data);
-          })
-      }
         getList();
+        // eslint-disable-next-line
     }, [filter])
+
+    const getList = () => {
+      axios.post(`http://localhost:5000/npclist/`, filter).then((allNPC) => {
+          setNPCList(allNPC.data);
+        })
+    }
 
     const deleteNPC = (id) => {
         axios.delete(`http://localhost:5000/npclist/${id}`).then(() => {
-          var array = [...npcList]
-          for (var i=0; i < array.length; i++){
-            if(array[i]._id === id){
-              array.splice(array.indexOf(i), 1)
-            }
-          }
-          setNPCList(array)
+          getList();
         })
       }
 
@@ -81,9 +77,8 @@ export default function ShowNPC() {
           url: `http://localhost:5000/npclist/${id}`,
           data: activeNPC
       }).then( () => {
-          console.log(`updated ${activeNPC.name}`)
+        getList();
           handleClose();
-          window.location.reload(false)
       })
       }
 
