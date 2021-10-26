@@ -65,6 +65,7 @@ export default function ShowNPC() {
         })
     }
 
+    //pull request test
     const deleteNPC = (id) => {
         axios.delete(`http://localhost:5000/npclist/${id}`).then(() => {
           getList();
